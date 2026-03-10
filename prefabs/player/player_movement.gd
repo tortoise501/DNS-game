@@ -8,6 +8,7 @@ var currentHP = 1000
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	update_hp_label()
 	pass # Replace with function body.
 
 
@@ -28,5 +29,10 @@ func _physics_process(delta: float) -> void:
 func get_hit(damage):
 	currentHP -= damage
 	print("current HP: %d" % currentHP)
+	update_hp_label()
 	if currentHP <= 0:
+		$HPLabel.text = "dead"
 		print("player is dead")
+
+func update_hp_label():
+	$HPLabel.text = "%d/%d" % [currentHP, maxHP]

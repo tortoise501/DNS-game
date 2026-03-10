@@ -11,8 +11,10 @@ var ability_used = 0
 var arrow_rain_count = 50
 var arrow_rain_radius = 100
 var arrow_rain_height = 200
+var arrow_rain_KD = 10000 #msec
+var last_time_arrow_rain_used = -100000
 
-func _physics_process(_delta: float) -> void:
+func _process(_delta: float) -> void:
 	queue_redraw()
 	
 	if Input.is_action_just_pressed("ability_1"):
@@ -20,39 +22,41 @@ func _physics_process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
-				
-				
+	
+	if last_time_arrow_rain_used + arrow_rain_KD < Time.get_ticks_msec():
+		$"../CanvasLayer/Control/AbilityKD1".text = "0"#first ability is ready
+	else:
+		$"../CanvasLayer/Control/AbilityKD1".text = String("%.1f s" % ((last_time_arrow_rain_used + arrow_rain_KD - Time.get_ticks_msec())/1000.0))
+			
 func shoot():
-	var to_mouse_vector: Vector2 = get_global_mouse_position() - global_position
 	match ability_used:
 		0:
-			#var bullet_instance:RigidBody2D = bullet.instantiate()
-			
-			#bullet_instance.position = self.global_position + to_mouse_vector.normalized() * 50
-			#bullet_instance.look_at(bullet_instance.position + to_mouse_vector.normalized())
-			#get_node("/root/Node2D").add_child(bullet_instance)
-			spawn_bullet(
-				350,
-				self.global_position + to_mouse_vector.normalized() * 50,
-				to_mouse_vector.normalized())
+			use_ability0()
 		1:
-			print("ability 1 used")
-			
-			for i in range(arrow_rain_count):
-				var angle = randf_range(0,360)
-				var distance = randf_range(0, arrow_rain_radius)
-				#var bullet_instance: RigidBody2D = bullet.instantiate()
-				#bullet_instance.position = get_global_mouse_position() + Vector2(distance,0).rotated(angle) + Vector2(0,-arrow_rain_height)
-				#bullet_instance.look_at(bullet_instance.position + Vector2.DOWN)
-				#get_node("/root/Node2D").add_child(bullet_instance)
-				#bullet_instance.life_span = arrow_rain_height
-				spawn_bullet(
-					50,
-					get_global_mouse_position() + Vector2(distance,0).rotated(angle) + Vector2(0,-arrow_rain_height),
-					Vector2.DOWN,
-					arrow_rain_height)
-			
-			change_ability(0)
+			use_ability1()
+				
+func use_ability1():
+	if last_time_arrow_rain_used + arrow_rain_KD < Time.get_ticks_msec():
+		last_time_arrow_rain_used = Time.get_ticks_msec()
+		for i in range(arrow_rain_count):
+			var angle = randf_range(0,360)
+			var distance = randf_range(0, arrow_rain_radius)
+			spawn_bullet(
+				50,
+				get_global_mouse_position() + Vector2(distance,0).rotated(angle) + Vector2(0,-arrow_rain_height),
+				Vector2.DOWN,
+				arrow_rain_height)
+		
+		change_ability(0)
+		
+
+func use_ability0():
+	var to_mouse_vector: Vector2 = get_global_mouse_position() - global_position
+	spawn_bullet(
+		350,
+		self.global_position + to_mouse_vector.normalized() * 50,
+		to_mouse_vector.normalized())
+	
 
 func change_ability(to_ability: int):
 	if ability_used != to_ability:

@@ -8,6 +8,8 @@ size = Vector2(127, 128)
 
 [node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
 scale = Vector2(0.4, 0.4)
+motion_mode = 1
+platform_on_leave = 2
 script = ExtResource("1_u6v4s")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." groups=["Enemy"]]
@@ -19,3 +21,13 @@ flip_v = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Enemy"]]
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_u6v4s")
+
+[node name="HPLabel" type="Label" parent="."]
+offset_left = -67.49999
+offset_top = -137.5
+offset_right = 72.49999
+offset_bottom = -67.0
+theme_override_font_sizes/font_size = 26
+text = "test text"
+horizontal_alignment = 1
+vertical_alignment = 1

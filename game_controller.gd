@@ -9,7 +9,7 @@ var score = 0
 #spawns / sec
 var start_spawn_rate = 0.2
 var max_spawn_rate = 4
-var time_to_max_spawnrate = 180 #sec
+var time_to_max_spawnrate = 360 #sec
 func get_current_spawn_rate():
 	var increase_span = max_spawn_rate - start_spawn_rate
 	var time_passed = Time.get_ticks_msec() / 1000
@@ -24,6 +24,7 @@ var last_time_enemy_queue = -100000
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	update_score_label()
 	pass # Replace with function body.
 
 
@@ -48,5 +49,7 @@ func _on_child_entered_tree(node: Node) -> void:
 
 func _on_enemy_died():
 	score+=1
-	print("score: %d" % score)
+	update_score_label()
 	pass
+func update_score_label():
+	$CanvasLayer/Control/ScoreLabel.text = String("score: %d" % score)

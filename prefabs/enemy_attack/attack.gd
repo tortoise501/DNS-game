@@ -18,8 +18,6 @@ func _on_body_entered(body: Node2D) -> void:
 	if damage != 0 && body.is_in_group("Player") && body.has_method("get_hit"):
 		body.get_hit(damage)
 		damage = 0
-		
-		
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:

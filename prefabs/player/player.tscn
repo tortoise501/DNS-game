@@ -9,9 +9,10 @@ size = Vector2(127, 127)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 scale = Vector2(0.33, 0.33)
+motion_mode = 1
 script = ExtResource("1_rdx4y")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Weapon" type="Node2D" parent="."]
 script = ExtResource("2_binfn")
 
 [node name="Sprite2D" type="Sprite2D" parent="." groups=["Player"]]
@@ -24,3 +25,30 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_1txc5")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="HPLabel" type="Label" parent="."]
+offset_left = -151.51514
+offset_top = -193.93938
+offset_right = 151.51514
+offset_bottom = -63.636353
+theme_override_font_sizes/font_size = 52
+text = "TEST TEXT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AbilityKD1" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 354.0
+offset_top = 523.0
+offset_right = 430.0
+offset_bottom = 578.0
+theme_override_font_sizes/font_size = 40
+text = "4.5s"

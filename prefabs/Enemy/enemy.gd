@@ -18,6 +18,7 @@ var last_attack_time = 0
 signal enemy_died
 
 func _ready():
+	update_hp_label()
 	# These values need to be adjusted for the actor's speed
 	# and the navigation layout.
 	navigation_agent.path_desired_distance = 4.0
@@ -56,16 +57,20 @@ func _process(delta: float) -> void:
 func attack(player_pos):
 	var attack_inst = attack_pref.instantiate()
 	attack_inst.damage = attack_damage
-	attack_inst.look_at(player_pos)
 	attack_inst.global_position = (global_position + player_pos)/2
+	attack_inst.look_at(player_pos)
 	get_node("/root/Node2D").add_child(attack_inst)
 	pass
 
 
 func get_hit(damage):
 	currentHP -= damage
+	update_hp_label()
 	if active && currentHP <= 0:
 		active = false
 		print("enemy is dead")
 		enemy_died.emit()
 		queue_free()
+
+func update_hp_label():
+	$HPLabel.text = "%d/%d" % [currentHP, maxHP]
