@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ck2j0at6nwwml"]
+
+[ext_resource type="Script" uid="uid://bunc5bya5xk55" path="res://prefabs/player/player_movement.gd" id="1_rdx4y"]
+[ext_resource type="Script" uid="uid://cuk44abbv471t" path="res://prefabs/player/player_weapon.gd" id="2_binfn"]
+[ext_resource type="Texture2D" uid="uid://cpflyt6byuh1i" path="res://icon.svg" id="2_wv1mm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1txc5"]
+size = Vector2(127, 127)
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+scale = Vector2(0.33, 0.33)
+script = ExtResource("1_rdx4y")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("2_binfn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["Player"]]
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("2_wv1mm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Player"]]
+position = Vector2(0.49999997, -0.49999997)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_1txc5")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

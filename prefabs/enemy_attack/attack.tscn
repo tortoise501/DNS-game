@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://bf750vtojxrbe"]
+
+[ext_resource type="Script" uid="uid://1gfelr7nqh2x" path="res://prefabs/enemy_attack/attack.gd" id="1_eqj6u"]
+[ext_resource type="Texture2D" uid="uid://cfjing12xiyvr" path="res://prefabs/effects/SFX304_nyknck/SFX304_01.png" id="1_k8yv2"]
+[ext_resource type="Texture2D" uid="uid://dy2hfwydnulj8" path="res://prefabs/effects/SFX304_nyknck/SFX304_02.png" id="2_eqj6u"]
+[ext_resource type="Texture2D" uid="uid://dyog66vc0sdqy" path="res://prefabs/effects/SFX304_nyknck/SFX304_03.png" id="3_i6eee"]
+[ext_resource type="Texture2D" uid="uid://soxgiegk4ssu" path="res://prefabs/effects/SFX304_nyknck/SFX304_04.png" id="4_ch4e8"]
+[ext_resource type="Texture2D" uid="uid://8cdayjiq5bn3" path="res://prefabs/effects/SFX304_nyknck/SFX304_05.png" id="5_sglto"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wusel"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_k8yv2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_eqj6u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_i6eee")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ch4e8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sglto")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 11.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqj6u"]
+size = Vector2(32, 36)
+
+[node name="Area2D" type="Area2D"]
+scale = Vector2(1.4, 1.4)
+script = ExtResource("1_eqj6u")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_wusel")
+animation = &"attack"
+frame = 4
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_eqj6u")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

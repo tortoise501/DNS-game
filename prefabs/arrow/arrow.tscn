@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dd4ogq6c4gnhu"]
+
+[ext_resource type="Script" uid="uid://2icik706van6" path="res://prefabs/arrow/arrow.gd" id="1_6ga5o"]
+[ext_resource type="Texture2D" uid="uid://delwy5rat0lpk" path="res://prefabs/arrow/arrow.png" id="1_eah3a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ga5o"]
+size = Vector2(22, 4)
+
+[node name="RigidBody2D" type="RigidBody2D" groups=["PlayerBullet"]]
+gravity_scale = 0.0
+script = ExtResource("1_6ga5o")
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["PlayerBullet"]]
+position = Vector2(3.8146973e-06, 0)
+scale = Vector2(0.025, 0.025)
+texture = ExtResource("1_eah3a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["PlayerBullet"]]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_6ga5o")

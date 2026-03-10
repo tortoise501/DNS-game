@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu60bsxaki8mw"]
+
+[ext_resource type="Script" uid="uid://djf16n23aq1ub" path="res://prefabs/aim_point/aim_point.gd" id="1_72ycf"]
+[ext_resource type="Texture2D" uid="uid://o2gseimct68l" path="res://prefabs/aim_point/crosshair.png" id="2_7bvj6"]
+
+[node name="AimPoint" type="Node2D"]
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_72ycf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_7bvj6")
