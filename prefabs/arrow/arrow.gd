@@ -2,7 +2,7 @@ extends RigidBody2D
 
 var speed = 800
 var life_span = 1000
-var min_speed = 200
+var min_speed = 300
 var initial_pos = Vector2.ZERO
 
 var damage = 350

@@ -499,3 +499,5 @@ navigation_polygon = SubResource("NavigationPolygon_k0juu")
 
 [node name="EnemySpawnerSW" parent="." instance=ExtResource("6_qfnet")]
 position = Vector2(-306, 151)
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
