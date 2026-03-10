@@ -6,7 +6,7 @@ extends Node2D
 
 #TEST ONLY
 var time_between_enemy_spawn = 5000 #msec
-var last_time_enemy_spawn = 0
+var last_time_enemy_spawn = -100000
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

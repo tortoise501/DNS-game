@@ -28,3 +28,5 @@ func _physics_process(delta: float) -> void:
 func get_hit(damage):
 	currentHP -= damage
 	print("current HP: %d" % currentHP)
+	if currentHP <= 0:
+		print("player is dead")

@@ -26,22 +26,31 @@ func shoot():
 	var to_mouse_vector: Vector2 = get_global_mouse_position() - global_position
 	match ability_used:
 		0:
-			var bullet_instance:RigidBody2D = bullet.instantiate()
+			#var bullet_instance:RigidBody2D = bullet.instantiate()
 			
-			bullet_instance.position = self.global_position + to_mouse_vector.normalized() * 50
-			bullet_instance.look_at(bullet_instance.position + to_mouse_vector.normalized())
-			get_node("/root/Node2D").add_child(bullet_instance)
+			#bullet_instance.position = self.global_position + to_mouse_vector.normalized() * 50
+			#bullet_instance.look_at(bullet_instance.position + to_mouse_vector.normalized())
+			#get_node("/root/Node2D").add_child(bullet_instance)
+			spawn_bullet(
+				350,
+				self.global_position + to_mouse_vector.normalized() * 50,
+				to_mouse_vector.normalized())
 		1:
 			print("ability 1 used")
 			
 			for i in range(arrow_rain_count):
 				var angle = randf_range(0,360)
 				var distance = randf_range(0, arrow_rain_radius)
-				var bullet_instance: RigidBody2D = bullet.instantiate()
-				bullet_instance.position = get_global_mouse_position() + Vector2(distance,0).rotated(angle) + Vector2(0,-arrow_rain_height)
-				bullet_instance.look_at(bullet_instance.position + Vector2.DOWN)
-				get_node("/root/Node2D").add_child(bullet_instance)
-				bullet_instance.life_span = arrow_rain_height
+				#var bullet_instance: RigidBody2D = bullet.instantiate()
+				#bullet_instance.position = get_global_mouse_position() + Vector2(distance,0).rotated(angle) + Vector2(0,-arrow_rain_height)
+				#bullet_instance.look_at(bullet_instance.position + Vector2.DOWN)
+				#get_node("/root/Node2D").add_child(bullet_instance)
+				#bullet_instance.life_span = arrow_rain_height
+				spawn_bullet(
+					50,
+					get_global_mouse_position() + Vector2(distance,0).rotated(angle) + Vector2(0,-arrow_rain_height),
+					Vector2.DOWN,
+					arrow_rain_height)
 			
 			change_ability(0)
 
@@ -63,3 +72,13 @@ func change_ability(to_ability: int):
 	
 func _draw() -> void:
 	draw_line($".".position,get_local_mouse_position(),Color.WHITE)
+
+func spawn_bullet(damage, pos, look_at_vec_mod, life_span = 0):
+	var bullet_instance:RigidBody2D = bullet.instantiate()
+	bullet_instance.global_position = pos
+	bullet_instance.look_at(bullet_instance.global_position + look_at_vec_mod)
+	if life_span != 0:
+		bullet_instance.life_span = life_span
+	bullet_instance.damage = damage
+	get_node("/root/Node2D").add_child(bullet_instance)
+	pass

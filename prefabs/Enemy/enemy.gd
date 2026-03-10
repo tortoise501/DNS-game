@@ -3,6 +3,9 @@ extends CharacterBody2D
 var movement_speed: float = 100.0
 var movement_target_position: Vector2 = Vector2(60.0,180.0)
 
+var maxHP = 1000
+var currentHP = 1000
+
 @onready var attack_pref = preload("res://prefabs/enemy_attack/attack.tscn")
 var attack_distance = 75
 var attack_damage = 10
@@ -54,3 +57,10 @@ func attack(player_pos):
 	attack_inst.global_position = (global_position + player_pos)/2
 	get_node("/root/Node2D").add_child(attack_inst)
 	pass
+
+
+func get_hit(damage):
+	currentHP -= damage
+	if currentHP <= 0:
+		print("enemy is dead")
+		queue_free()

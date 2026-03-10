@@ -18,3 +18,5 @@ texture = ExtResource("1_eah3a")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["PlayerBullet"]]
 position = Vector2(1, 0)
 shape = SubResource("RectangleShape2D_6ga5o")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
