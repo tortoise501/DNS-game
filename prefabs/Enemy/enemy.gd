@@ -15,6 +15,8 @@ var last_attack_time = 0
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 
+@onready var animation_handler = $AnimatedSprite2D
+
 signal enemy_died
 
 func _ready():
@@ -38,6 +40,8 @@ func set_movement_target(movement_target: Vector2):
 	navigation_agent.target_position = movement_target
 
 func _physics_process(delta):
+	if !active:
+		return
 	if navigation_agent.is_navigation_finished():
 		return
 
@@ -45,14 +49,23 @@ func _physics_process(delta):
 	var next_path_position: Vector2 = navigation_agent.get_next_path_position()
 
 	velocity = current_agent_position.direction_to(next_path_position) * movement_speed
+	
+		
 	move_and_slide()
 	set_movement_target(get_parent().player.global_position)
 	
 func _process(delta: float) -> void:
+	
 	var player_pos = get_parent().player.global_position
 	if last_attack_time + attack_time < Time.get_ticks_msec() && (player_pos - global_position).length() < attack_distance:
 		last_attack_time = Time.get_ticks_msec()
 		attack(player_pos)
+		animation_handler.play("shoot")
+	elif !animation_handler.is_playing() && active:
+		if velocity != Vector2.ZERO:
+			animation_handler.play("run")
+		if velocity == Vector2.ZERO:
+			animation_handler.play("idle")
 		
 func attack(player_pos):
 	var attack_inst = attack_pref.instantiate()
@@ -68,9 +81,16 @@ func get_hit(damage):
 	update_hp_label()
 	if active && currentHP <= 0:
 		active = false
-		print("enemy is dead")
+		animation_handler.play("death")
 		enemy_died.emit()
-		queue_free()
 
 func update_hp_label():
 	$HPLabel.text = "%d/%d" % [currentHP, maxHP]
+	
+	
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if !active:
+		queue_free()
+	pass # Replace with function body.

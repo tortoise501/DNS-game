@@ -14,6 +14,9 @@ var arrow_rain_height = 200
 var arrow_rain_KD = 10000 #msec
 var last_time_arrow_rain_used = -100000
 
+signal shot(int)
+
+
 func _process(_delta: float) -> void:
 	queue_redraw()
 	
@@ -37,6 +40,7 @@ func shoot():
 				
 func use_ability1():
 	if last_time_arrow_rain_used + arrow_rain_KD < Time.get_ticks_msec():
+		shot.emit(1)
 		last_time_arrow_rain_used = Time.get_ticks_msec()
 		for i in range(arrow_rain_count):
 			var angle = randf_range(0,360)
@@ -51,6 +55,7 @@ func use_ability1():
 		
 
 func use_ability0():
+	shot.emit(0)
 	var to_mouse_vector: Vector2 = get_global_mouse_position() - global_position
 	spawn_bullet(
 		350,
