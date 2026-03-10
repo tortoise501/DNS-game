@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://70l54w7mbusj"]
+
+[ext_resource type="Script" uid="uid://cupkoka6ksh2i" path="res://prefabs/enemy_spawner/enemy_spawner.gd" id="1_cymij"]
+[ext_resource type="Texture2D" uid="uid://r1608mgv3g5k" path="res://terrain/Texture/TX Props.png" id="2_cwjpk"]
+
+[node name="EnemySpawner" type="Node2D"]
+scale = Vector2(1.4, 1.4)
+script = ExtResource("1_cymij")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_cwjpk")
+region_enabled = true
+region_rect = Rect2(353, 269, 94, 72)
