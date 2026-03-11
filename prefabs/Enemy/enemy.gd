@@ -78,16 +78,20 @@ func attack(player_pos):
 
 func get_hit(damage):
 	currentHP -= damage
-	update_hp_label()
 	if active && currentHP <= 0:
+		currentHP = 0
 		active = false
 		animation_handler.play("death")
+		$CollisionShape2D.set_deferred("disabled",true)
 		enemy_died.emit()
+	update_hp_label()
+	
 
 func update_hp_label():
-	$HPLabel.text = "%d/%d" % [currentHP, maxHP]
-	
-	
+	if active:
+		$HPLabel.text = "%d/%d" % [currentHP, maxHP]
+	else:
+		$HPLabel.set_deferred("visible",false)
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
