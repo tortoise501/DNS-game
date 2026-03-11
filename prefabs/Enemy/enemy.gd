@@ -26,6 +26,7 @@ signal enemy_died
 
 
 func _ready():
+	currentHP = maxHP
 	update_hp_label()
 	# These values need to be adjusted for the actor's speed
 	# and the navigation layout.
