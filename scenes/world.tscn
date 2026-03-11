@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=4 uid="uid://dvy455l0dj152"]
+[gd_scene load_steps=14 format=4 uid="uid://dvy455l0dj152"]
 
 [ext_resource type="Texture2D" uid="uid://cd71dakifp3hg" path="res://terrain/Texture/TX Tileset Grass.png" id="1_4wyf3"]
 [ext_resource type="Script" uid="uid://bf4ungj1swrb2" path="res://game_controller.gd" id="1_71j4m"]
-[ext_resource type="PackedScene" uid="uid://c6htirfbpq5mt" path="res://prefabs/ghost/ghost.tscn" id="2_i7141"]
 [ext_resource type="Texture2D" uid="uid://gjputo8nbleo" path="res://terrain/Texture/TX Tileset Stone Ground.png" id="2_k0juu"]
 [ext_resource type="PackedScene" uid="uid://ck2j0at6nwwml" path="res://prefabs/player/player.tscn" id="3_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bu60bsxaki8mw" path="res://prefabs/aim_point/aim_point.tscn" id="4_k0juu"]
@@ -527,8 +526,14 @@ navigation_polygon = SubResource("NavigationPolygon_k0juu")
 [node name="EnemySpawnerSW" parent="." instance=ExtResource("6_qfnet")]
 position = Vector2(-306, 151)
 
-[node name="Ghost" parent="." instance=ExtResource("2_i7141")]
-position = Vector2(-234, -54)
+[node name="EnemySpawnerSE" parent="." instance=ExtResource("6_qfnet")]
+position = Vector2(359.99994, 167.00002)
+
+[node name="EnemySpawnerNE" parent="." instance=ExtResource("6_qfnet")]
+position = Vector2(372, -242.99995)
+
+[node name="EnemySpawnerNW" parent="." instance=ExtResource("6_qfnet")]
+position = Vector2(-330.99994, -254.99998)
 
 [node name="Enemy" parent="." instance=ExtResource("8_4mrxx")]
 position = Vector2(-279, 511)

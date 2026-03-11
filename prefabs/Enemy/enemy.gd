@@ -4,6 +4,8 @@ extends CharacterBody2D
 var movement_target_position: Vector2 = Vector2.ZERO
 @onready var player: Node2D
 
+@export var enemy_tier := 1
+
 @export var maxHP := 1000
 var currentHP = maxHP
 var active = true
@@ -98,7 +100,7 @@ func get_hit(damage):
 		var ghost_inst:Node2D = ghost_pref.instantiate()
 		ghost_inst.global_position = global_position + Vector2.UP * 20
 		get_node("/root/Node2D").add_child(ghost_inst)
-		enemy_died.emit()
+		enemy_died.emit(enemy_tier)
 	update_hp_label()
 
 

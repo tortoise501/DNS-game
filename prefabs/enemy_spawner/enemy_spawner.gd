@@ -15,10 +15,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func spawn_enemy():
+func spawn_enemy(pref):
 	for enemy_i in range(spawn_amout):
 		var angle = randf_range(0,360)
 		var distance = randf_range(0, spawn_radius)
-		var enemy_instance: CharacterBody2D = enemy_pref.instantiate()
+		var enemy_instance: CharacterBody2D = pref.instantiate()
 		enemy_instance.global_position = global_position + Vector2(distance,0).rotated(angle)
 		get_node("/root/Node2D").add_child(enemy_instance)

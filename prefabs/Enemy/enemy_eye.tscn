@@ -208,6 +208,7 @@ size = Vector2(100.00002, 90.00002)
 
 [node name="Enemy" instance=ExtResource("1_ccrdo")]
 movement_speed = 250.0
+enemy_tier = 3
 maxHP = 500
 attack_distance = 200
 attack_damage = 20
