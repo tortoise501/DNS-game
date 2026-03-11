@@ -38,6 +38,9 @@ func _physics_process(delta: float) -> void:
 	if !alive:
 		return
 	
+	if abs(global_position.x) > 1300 || abs(global_position.y) > 1300:
+		get_hit(500 * delta)
+	
 	var modified_speed = speed
 	if speed_buff_end_time > Time.get_ticks_msec():
 		modified_speed += speed_buff_strength

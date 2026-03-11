@@ -136,9 +136,13 @@ func _on_player_game_over() -> void:
 	pass # Replace with function body.
 
 func save_best_score():
-	var file = FileAccess.open(save_path, FileAccess.WRITE_READ)
+	var file = FileAccess.open(save_path, FileAccess.READ)
 	var best_score = file.get_32()
-	print(best_score)
 	if best_score < score:
-		file.store_32(score)
-	file.close()
+		best_score = score
+	
+	
+	#print(best_score)
+	#if best_score < score:
+		#file.store_32(score)
+	#file.close()
