@@ -1,6 +1,7 @@
 extends Node2D
 
 var speed = 300
+var velocity_vector = Vector2.ZERO
 
 var maxHP = 1000
 var currentHP = 1000
@@ -8,9 +9,9 @@ var currentHP = 1000
 @onready var animation_handler = $AnimatedSprite2D
 var shooting = false
 
-var do_dash = false
-var dash_power = 400
 
+
+@onready var dash_anim_pref = preload("res://prefabs/dash/dash_anim.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,8 +21,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	
-	var velocity_vector = Vector2.ZERO
+	velocity_vector = Vector2.ZERO
 	if Input.is_action_pressed("ui_up") || Input.is_key_pressed(KEY_W):
 		velocity_vector += Vector2.UP
 	if Input.is_action_pressed("ui_down") || Input.is_key_pressed(KEY_S):
@@ -30,11 +30,7 @@ func _physics_process(delta: float) -> void:
 		velocity_vector += Vector2.LEFT
 	if Input.is_action_pressed("ui_right") || Input.is_key_pressed(KEY_D):
 		velocity_vector += Vector2.RIGHT
-	if do_dash:
-		translate(velocity_vector.normalized() * dash_power)
-		do_dash = false
-	else:
-		translate(velocity_vector.normalized() * speed * delta)
+	translate(velocity_vector.normalized() * speed * delta)
 	if !shooting:
 		if velocity_vector == Vector2.ZERO:
 			animation_handler.play("idle")
@@ -77,6 +73,12 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	pass # Replace with function body.
 
 
-func dash():
-	do_dash = true
-	pass
+func dash(dash_damage, dash_power, dash_to):
+	var dash_anim_inst:Node2D = dash_anim_pref.instantiate()
+	var dir = (dash_to - global_position).normalized()
+	dash_anim_inst.global_position = (global_position + (global_position + dir * dash_power))/2.0
+	dash_anim_inst.look_at(dash_anim_inst.global_position + dir)
+	dash_anim_inst.dash_size = dash_power
+	dash_anim_inst.dash_damage = dash_damage
+	get_node("/root/Node2D").add_child(dash_anim_inst)
+	translate(dir * dash_power)

@@ -90,7 +90,7 @@ func get_hit(damage):
 		get_node("/root/Node2D").add_child(ghost_inst)
 		enemy_died.emit()
 	update_hp_label()
-	
+
 
 func update_hp_label():
 	if active:

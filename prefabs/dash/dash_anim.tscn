@@ -1,0 +1,81 @@
+[gd_scene load_steps=17 format=3 uid="uid://cdse6i5vtgjkn"]
+
+[ext_resource type="Texture2D" uid="uid://d357yugpsp8nt" path="res://prefabs/effects/lightning/lightning_v2_1.png" id="1_fj7h2"]
+[ext_resource type="Script" uid="uid://cwggm5wxf2ky1" path="res://prefabs/dash/dash_anim.gd" id="1_x4hjn"]
+[ext_resource type="Texture2D" uid="uid://bcg7y8jfmku5c" path="res://prefabs/effects/lightning/lightning_v2_2.png" id="2_x4hjn"]
+[ext_resource type="Texture2D" uid="uid://b2bff8yw6qmuv" path="res://prefabs/effects/lightning/lightning_v2_3.png" id="3_jlve8"]
+[ext_resource type="Texture2D" uid="uid://bill88fesvnjf" path="res://prefabs/effects/lightning/lightning_v2_4.png" id="4_ikrkq"]
+[ext_resource type="Texture2D" uid="uid://kpelvv8jou3n" path="res://prefabs/effects/lightning/lightning_v2_5.png" id="5_bkvox"]
+[ext_resource type="Texture2D" uid="uid://bkltyo2g1qd4w" path="res://prefabs/effects/lightning/lightning_v2_6.png" id="6_gwdxy"]
+[ext_resource type="Texture2D" uid="uid://3lue86a5t8h6" path="res://prefabs/effects/lightning/lightning_v2_7.png" id="7_qsxal"]
+[ext_resource type="Texture2D" uid="uid://b0hl8wf8id51i" path="res://prefabs/effects/lightning/lightning_v2_8.png" id="8_8lhdu"]
+[ext_resource type="Texture2D" uid="uid://cxqkx14hlwlio" path="res://prefabs/effects/lightning/lightning_v2_9.png" id="9_eg4tj"]
+[ext_resource type="Texture2D" uid="uid://6fhwetsfmy71" path="res://prefabs/effects/lightning/lightning_v2_10.png" id="10_vtyof"]
+[ext_resource type="Texture2D" uid="uid://bggwmjnceslqk" path="res://prefabs/effects/lightning/lightning_v2_11.png" id="11_ulhh2"]
+[ext_resource type="Texture2D" uid="uid://b17u16a12k1xm" path="res://prefabs/effects/lightning/lightning_v2_12.png" id="12_w4jp4"]
+[ext_resource type="Texture2D" uid="uid://c1lkxxn14xisv" path="res://prefabs/effects/lightning/lightning_v2_13.png" id="13_8ynl3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i5wn7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_fj7h2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_x4hjn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_jlve8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ikrkq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bkvox")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gwdxy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_qsxal")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_8lhdu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_eg4tj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_vtyof")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ulhh2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_w4jp4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_8ynl3")
+}],
+"loop": false,
+"name": &"default",
+"speed": 25.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x4hjn"]
+size = Vector2(105, 24)
+
+[node name="DashAnim" type="Area2D"]
+script = ExtResource("1_x4hjn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_i5wn7")
+frame = 12
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_x4hjn")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

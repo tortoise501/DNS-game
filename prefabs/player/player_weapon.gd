@@ -8,14 +8,19 @@ var ability_used = 0
 @onready var aim_point = get_node("/root/Node2D/AimPoint")
 @onready var aim_point_sprite: Sprite2D = get_node("/root/Node2D/AimPoint/Sprite2D")
 
+var simple_shot_damage = 350
+
 var arrow_rain_count = 50
 var arrow_rain_radius = 100
 var arrow_rain_height = 200
 var arrow_rain_KD = 10000 #msec
 var last_time_arrow_rain_used = -100000
+var arrow_rain_damage = 50
 
 var dash_KD = 3000
 var last_time_dash_used = -3000
+var dash_power = 200
+var dash_damage = 200
 
 signal shot(int)
 
@@ -55,7 +60,7 @@ func shoot():
 func use_ability2():
 	if last_time_dash_used + dash_KD < Time.get_ticks_msec():
 		last_time_dash_used = Time.get_ticks_msec()
-		get_parent().dash()
+		get_parent().dash(dash_damage, dash_power, get_global_mouse_position())
 	change_ability(0)
 				
 func use_ability1():
@@ -66,7 +71,7 @@ func use_ability1():
 			var angle = randf_range(0,360)
 			var distance = randf_range(0, arrow_rain_radius)
 			spawn_bullet(
-				50,
+				arrow_rain_damage,
 				get_global_mouse_position() + Vector2(distance,0).rotated(angle) + Vector2(0,-arrow_rain_height),
 				Vector2.DOWN,
 				arrow_rain_height)
@@ -78,7 +83,7 @@ func use_ability0():
 	shot.emit(0)
 	var to_mouse_vector: Vector2 = get_global_mouse_position() - global_position
 	spawn_bullet(
-		350,
+		simple_shot_damage,
 		self.global_position + to_mouse_vector.normalized() * 50,
 		to_mouse_vector.normalized())
 	
