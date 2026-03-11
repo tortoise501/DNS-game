@@ -137,3 +137,7 @@ func freeze():
 	frozen = true
 	active = false
 	animation_handler.play("death")
+
+
+func play_hit_sound():
+	$GetHit.play()

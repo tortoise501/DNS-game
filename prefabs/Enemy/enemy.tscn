@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://8qhxwle63jvq"]
+[gd_scene load_steps=78 format=3 uid="uid://8qhxwle63jvq"]
 
 [ext_resource type="Script" uid="uid://c6h7cxwr4levi" path="res://prefabs/Enemy/enemy.gd" id="1_u6v4s"]
 [ext_resource type="Texture2D" uid="uid://dg0lcevd1ab45" path="res://prefabs/Enemy/Skeleton/Sprite Sheets/Skeleton Dead.png" id="2_kvle1"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://bnkvs15sil2av" path="res://prefabs/Enemy/Skeleton/Sprite Sheets/Skeleton Walk.png" id="3_kvle1"]
 [ext_resource type="Texture2D" uid="uid://c5epo7wlhoq40" path="res://prefabs/Enemy/Skeleton/Sprite Sheets/Skeleton Attack.png" id="4_bmjik"]
 [ext_resource type="Script" uid="uid://vgtn2m3lf0mn" path="res://prefabs/Enemy/enemy_weapon.gd" id="6_bmjik"]
+[ext_resource type="AudioStream" uid="uid://bw62uye00wjk6" path="res://sounds/player_hit2.wav" id="8_7kpku"]
+[ext_resource type="AudioStream" uid="uid://eslks5levrvj" path="res://sounds/enemy_projectyle.wav" id="8_27toa"]
+[ext_resource type="AudioStream" uid="uid://cw6jofgo7q7gb" path="res://sounds/arrow_hit.wav" id="10_o8vwy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bmjik"]
 atlas = ExtResource("2_kvle1")
@@ -530,5 +533,21 @@ vertical_alignment = 1
 
 [node name="Weapon" type="Node2D" parent="."]
 script = ExtResource("6_bmjik")
+
+[node name="Mellee" type="AudioStreamPlayer2D" parent="Weapon"]
+scale = Vector2(0.99999994, 0.99999994)
+stream = ExtResource("8_7kpku")
+bus = &"SFX"
+
+[node name="Missile" type="AudioStreamPlayer2D" parent="Weapon"]
+stream = ExtResource("8_27toa")
+volume_db = -16.545
+bus = &"SFX"
+
+[node name="GetHit" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(0.99999994, 0.99999994)
+stream = ExtResource("10_o8vwy")
+volume_db = -10.636
+bus = &"SFX"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

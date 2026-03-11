@@ -3,8 +3,8 @@ extends Node2D
 var speed = 300
 var velocity_vector = Vector2.ZERO
 
-var maxHP = 1000
-var currentHP = 1000
+var maxHP = 1000.0
+var currentHP = 1000.0
 var alive = true
 
 signal game_over
@@ -29,7 +29,7 @@ var speed_buff_strength = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	update_hp_label()
+	update_hp_bar()
 	pass # Replace with function body.
 
 
@@ -83,14 +83,14 @@ func get_hit(damage):
 		return
 	currentHP -= damage
 	if currentHP <= 0:
-		$HPLabel.text = "dead"
 		emit_signal("game_over")
 		alive = false
+		animation_handler.play("death")
 	else:
-		update_hp_label()
+		update_hp_bar()
 
-func update_hp_label():
-	$HPLabel.text = "%d/%d" % [currentHP, maxHP]
+func update_hp_bar():
+	$CanvasLayer/Control/HPBarDecoration/ProgressBar.value = currentHP / maxHP * 100.0
 
 
 func _on_weapon_shot(_variant: int) -> void:
@@ -123,7 +123,7 @@ func heal(strength):
 	currentHP += strength
 	if currentHP > maxHP:
 		currentHP = maxHP
-	update_hp_label()
+	update_hp_bar()
 
 func speed_buff(strength, duration):
 	speed_buff_end_time = Time.get_ticks_msec() + duration

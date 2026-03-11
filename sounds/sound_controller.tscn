@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc1djfytrxhql"]
+
+[ext_resource type="Script" uid="uid://crj2qhqrntudp" path="res://sounds/music.gd" id="1_teukl"]
+[ext_resource type="AudioStream" uid="uid://c3pg31ldvfwn6" path="res://sounds/meaning of existence.mp3" id="2_teukl"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_teukl")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_teukl")
+autoplay = true
+bus = &"Music"
+parameters/looping = true

@@ -18,12 +18,14 @@ func _process(_delta: float) -> void:
 func attack(player_pos:Vector2):
 	match attack_type:
 		Attack_type.MELEE:
+			$Mellee.play()
 			var attack_inst = melee_attack_pref.instantiate()
 			attack_inst.damage = get_parent().attack_damage
 			attack_inst.global_position = (global_position + player_pos)/2
 			attack_inst.look_at(player_pos)
 			get_node("/root/Node2D").add_child(attack_inst)
 		Attack_type.MAGIC_MISSILE:
+			$Missile.play()
 			var attack_inst = magic_missile_pref.instantiate()
 			attack_inst.damage = get_parent().attack_damage
 			attack_inst.global_position = global_position + (player_pos - global_position).normalized() * offset

@@ -1,11 +1,14 @@
-[gd_scene load_steps=11 format=4 uid="uid://dvy455l0dj152"]
+[gd_scene load_steps=14 format=4 uid="uid://dvy455l0dj152"]
 
 [ext_resource type="Texture2D" uid="uid://cd71dakifp3hg" path="res://terrain/Texture/TX Tileset Grass.png" id="1_4wyf3"]
 [ext_resource type="Script" uid="uid://bf4ungj1swrb2" path="res://game_controller.gd" id="1_71j4m"]
+[ext_resource type="PackedScene" uid="uid://b1j8qhq56u00j" path="res://scenes/ui/player_ui/game_over.tscn" id="2_7r4gi"]
 [ext_resource type="Texture2D" uid="uid://gjputo8nbleo" path="res://terrain/Texture/TX Tileset Stone Ground.png" id="2_k0juu"]
 [ext_resource type="PackedScene" uid="uid://ck2j0at6nwwml" path="res://prefabs/player/player.tscn" id="3_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bu60bsxaki8mw" path="res://prefabs/aim_point/aim_point.tscn" id="4_k0juu"]
 [ext_resource type="PackedScene" uid="uid://70l54w7mbusj" path="res://prefabs/enemy_spawner/enemy_spawner.tscn" id="6_qfnet"]
+[ext_resource type="PackedScene" uid="uid://bc1djfytrxhql" path="res://sounds/sound_controller.tscn" id="7_i7141"]
+[ext_resource type="PackedScene" uid="uid://b20clumhu1ybf" path="res://prefabs/Enemy/enemy_eye.tscn" id="10_e3hyu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4d63b"]
 texture = ExtResource("1_4wyf3")
@@ -483,6 +486,7 @@ texture_filter = 1
 script = ExtResource("1_71j4m")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 7
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -501,6 +505,9 @@ text = "score label"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="GameOver" parent="CanvasLayer" instance=ExtResource("2_7r4gi")]
+visible = false
+
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = -10
 texture_filter = 1
@@ -516,6 +523,8 @@ scale = Vector2(3.0303028, 3.0303028)
 [node name="AimPoint" parent="." instance=ExtResource("4_k0juu")]
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
+z_index = -6
 position = Vector2(53, 32)
 scale = Vector2(0.6, 0.6)
 navigation_polygon = SubResource("NavigationPolygon_k0juu")
@@ -535,6 +544,20 @@ position = Vector2(710, -718.99994)
 [node name="EnemySpawnerNW" parent="." instance=ExtResource("6_qfnet")]
 z_index = -9
 position = Vector2(-632, -684.99994)
+
+[node name="Node" parent="." instance=ExtResource("7_i7141")]
+
+[node name="Enemy" parent="." instance=ExtResource("10_e3hyu")]
+position = Vector2(-88, -55)
+
+[node name="Enemy2" parent="." instance=ExtResource("10_e3hyu")]
+position = Vector2(128, -63)
+
+[node name="Enemy3" parent="." instance=ExtResource("10_e3hyu")]
+position = Vector2(-3, 104)
+
+[node name="Enemy4" parent="." instance=ExtResource("10_e3hyu")]
+position = Vector2(264, 24)
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="game_over" from="Player" to="." method="_on_player_game_over"]

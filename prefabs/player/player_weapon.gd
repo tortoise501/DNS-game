@@ -41,14 +41,14 @@ func _process(_delta: float) -> void:
 		shoot()
 	
 	if last_time_arrow_rain_used + arrow_rain_KD < Time.get_ticks_msec():
-		$"../CanvasLayer/Control/AbilityKD1".text = "0"#first ability is ready
+		$"../CanvasLayer/Control/HPBarDecoration/AbilityKD1".text = ""#first ability is ready
 	else:
-		$"../CanvasLayer/Control/AbilityKD1".text = String("%.1f s" % ((last_time_arrow_rain_used + arrow_rain_KD - Time.get_ticks_msec())/1000.0))
+		$"../CanvasLayer/Control/HPBarDecoration/AbilityKD1".text = String("%.1f s" % ((last_time_arrow_rain_used + arrow_rain_KD - Time.get_ticks_msec())/1000.0))
 		
 	if last_time_dash_used + dash_KD < Time.get_ticks_msec():
-		$"../CanvasLayer/Control/AbilityKD2".text = "0"#first ability is ready
+		$"../CanvasLayer/Control/HPBarDecoration/AbilityKD2".text = ""#first ability is ready
 	else:
-		$"../CanvasLayer/Control/AbilityKD2".text = String("%.1f s" % ((last_time_dash_used + dash_KD - Time.get_ticks_msec())/1000.0))	
+		$"../CanvasLayer/Control/HPBarDecoration/AbilityKD2".text = String("%.1f s" % ((last_time_dash_used + dash_KD - Time.get_ticks_msec())/1000.0))	
 			
 func shoot():
 	match ability_used:
@@ -61,12 +61,14 @@ func shoot():
 			
 func use_ability2():
 	if last_time_dash_used + dash_KD < Time.get_ticks_msec():
+		$"Dash".play()
 		last_time_dash_used = Time.get_ticks_msec()
 		get_parent().dash(dash_damage, dash_power, get_global_mouse_position())
 	change_ability(0)
 				
 func use_ability1():
 	if last_time_arrow_rain_used + arrow_rain_KD < Time.get_ticks_msec():
+		$"ArrowRain".play()
 		shot.emit(1)
 		last_time_arrow_rain_used = Time.get_ticks_msec()
 		for i in range(arrow_rain_count):
@@ -82,6 +84,7 @@ func use_ability1():
 		
 
 func use_ability0():
+	$"BowShoot".play()
 	shot.emit(0)
 	var to_mouse_vector: Vector2 = get_global_mouse_position() - global_position
 	spawn_bullet(

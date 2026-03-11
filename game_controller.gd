@@ -32,9 +32,9 @@ var score = 0
 @export var buff_spawn_chance_per_tier := 10
 
 #spawns / sec
-var start_spawn_rate = 0.2
-var max_spawn_rate = 1
-var time_to_max_spawnrate = 60 #sec
+var start_spawn_rate = 0.5
+var max_spawn_rate = 5
+var time_to_max_spawnrate = 180 #sec
 
 var enemy_count = 0
 var max_enemy_count = 50
@@ -126,23 +126,17 @@ func explode(strength,radius,pos):
 
 
 func _on_player_game_over() -> void:
+	if !game_on:
+		return
 	game_on = false
 	var children = get_children()
 	for child in children:
 		if child.has_method("freeze"):
 			child.freeze()
+		if child.name == "AimPoint":
+			child.queue_free()
 	print("GAME OVER")
-	save_best_score()
+	var gamover = load("res://scenes/ui/player_ui/game_over.tscn")
+	$CanvasLayer/GameOver.show()
+	$CanvasLayer/GameOver/score.text = "%s" % score
 	pass # Replace with function body.
-
-func save_best_score():
-	var file = FileAccess.open(save_path, FileAccess.READ)
-	var best_score = file.get_32()
-	if best_score < score:
-		best_score = score
-	
-	
-	#print(best_score)
-	#if best_score < score:
-		#file.store_32(score)
-	#file.close()
