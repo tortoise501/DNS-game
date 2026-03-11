@@ -58,10 +58,15 @@ func _physics_process(delta):
 		velocity = current_agent_position.direction_to(next_path_position) * movement_speed
 	else:
 		velocity = Vector2.ZERO
-	if velocity.x >= 0:
+	if velocity.x > 0:
 		animation_handler.flip_h = false
-	else:
+	elif velocity.x < 0:
 		animation_handler.flip_h = true
+	else:
+		if player.global_position.x < global_position.x:
+			animation_handler.flip_h = true
+		else:
+			animation_handler.flip_h = false
 		
 		
 	move_and_slide()
