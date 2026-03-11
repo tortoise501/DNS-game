@@ -18,6 +18,8 @@ var last_attack_time = 0
 @onready var animation_handler = $AnimatedSprite2D
 
 signal enemy_died
+@onready var ghost_pref = preload("res://prefabs/ghost/ghost.tscn")
+
 
 func _ready():
 	update_hp_label()
@@ -83,6 +85,9 @@ func get_hit(damage):
 		active = false
 		animation_handler.play("death")
 		$CollisionShape2D.set_deferred("disabled",true)
+		var ghost_inst:Node2D = ghost_pref.instantiate()
+		ghost_inst.global_position = global_position + Vector2.UP * 20
+		get_node("/root/Node2D").add_child(ghost_inst)
 		enemy_died.emit()
 	update_hp_label()
 	

@@ -64,7 +64,7 @@ func update_hp_label():
 	$HPLabel.text = "%d/%d" % [currentHP, maxHP]
 
 
-func _on_weapon_shot(int: Variant) -> void:
+func _on_weapon_shot(_variant: int) -> void:
 	animation_handler.play("shoot")
 	shooting = true
 	pass # Replace with function body.
