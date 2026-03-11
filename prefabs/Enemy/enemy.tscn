@@ -444,9 +444,7 @@ texture_filter = 1
 position = Vector2(12.5, -2.5)
 scale = Vector2(4.0260415, 4.0260415)
 sprite_frames = SubResource("SpriteFrames_wx8k0")
-animation = &"death"
-frame = 14
-frame_progress = 1.0
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Enemy"]]
 position = Vector2(-2.5, 0)

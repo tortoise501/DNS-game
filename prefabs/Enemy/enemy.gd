@@ -1,16 +1,16 @@
 extends CharacterBody2D
 
-var movement_speed: float = 100.0
-var movement_target_position: Vector2 = Vector2(60.0,180.0)
+@export var movement_speed: float = 100.0
+var movement_target_position: Vector2 = Vector2.ZERO
 
-var maxHP = 1000
-var currentHP = 1000
+@export var maxHP := 1000
+var currentHP = maxHP
 var active = true
 
 @onready var attack_pref = preload("res://prefabs/enemy_attack/attack.tscn")
-var attack_distance = 75
-var attack_damage = 10
-var attack_time = 500 #in msec
+@export var attack_distance := 75
+@export var attack_damage := 10
+@export var attack_time := 500 #in msec
 var last_attack_time = 0
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
