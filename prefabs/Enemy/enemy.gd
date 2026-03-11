@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @export var movement_speed: float = 100.0
 var movement_target_position: Vector2 = Vector2.ZERO
+@onready var player: Node2D
 
 @export var maxHP := 1000
 var currentHP = maxHP
@@ -9,6 +10,7 @@ var active = true
 
 @onready var attack_pref = preload("res://prefabs/enemy_attack/attack.tscn")
 @export var attack_distance := 75
+var attack_distance_max_diff = 20
 @export var attack_damage := 10
 @export var attack_time := 500 #in msec
 var last_attack_time = 0
@@ -42,16 +44,18 @@ func set_movement_target(movement_target: Vector2):
 	navigation_agent.target_position = movement_target
 
 func _physics_process(delta):
+	if !player:
+		player = get_parent().player
+	
 	if !active:
 		return
-	if navigation_agent.is_navigation_finished():
-		return
+	if !navigation_agent.is_navigation_finished() && (player.global_position - global_position).length() > attack_distance - attack_distance_max_diff:
+		var current_agent_position: Vector2 = global_position
+		var next_path_position: Vector2 = navigation_agent.get_next_path_position()
 
-	var current_agent_position: Vector2 = global_position
-	var next_path_position: Vector2 = navigation_agent.get_next_path_position()
-
-	velocity = current_agent_position.direction_to(next_path_position) * movement_speed
-	
+		velocity = current_agent_position.direction_to(next_path_position) * movement_speed
+	else:
+		velocity = Vector2.ZERO
 	if velocity.x >= 0:
 		animation_handler.flip_h = false
 	else:
@@ -59,7 +63,7 @@ func _physics_process(delta):
 		
 		
 	move_and_slide()
-	set_movement_target(get_parent().player.global_position)
+	set_movement_target(player.global_position)
 	
 func _process(delta: float) -> void:
 	if !active:
