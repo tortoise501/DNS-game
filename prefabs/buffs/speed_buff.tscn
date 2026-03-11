@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://btqnls5sffekl"]
+
+[ext_resource type="PackedScene" uid="uid://c7gggu736a5d6" path="res://prefabs/buffs/buff.tscn" id="1_8q3cc"]
+[ext_resource type="Texture2D" uid="uid://co4xi5db1dob" path="res://prefabs/buffs/48 Free Magic Potions Pixel Art Icons/PNG/Transperent/Icon9.png" id="2_hbaof"]
+
+[node name="Buff" instance=ExtResource("1_8q3cc")]
+buff_type = 1
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_hbaof")

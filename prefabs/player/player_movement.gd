@@ -5,6 +5,9 @@ var velocity_vector = Vector2.ZERO
 
 var maxHP = 1000
 var currentHP = 1000
+var alive = true
+
+signal game_over
 
 @onready var animation_handler = $AnimatedSprite2D
 var shooting = false
@@ -15,11 +18,14 @@ var dash_dir = Vector2.ZERO
 var dash_start = Vector2.ZERO
 var dash_acc_error = 10
 var dash_speed = 5
+@onready var dash_anim_pref = preload("res://prefabs/dash/dash_anim.tscn")
+
 
 @onready var collision = $CollisionShape2D
 
+var speed_buff_end_time = 0
+var speed_buff_strength = 0
 
-@onready var dash_anim_pref = preload("res://prefabs/dash/dash_anim.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,6 +35,12 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
+	if !alive:
+		return
+	
+	var modified_speed = speed
+	if speed_buff_end_time > Time.get_ticks_msec():
+		modified_speed += speed_buff_strength
 	velocity_vector = Vector2.ZERO
 	if dashing:
 		collision.set_deferred("disabled",true)
@@ -45,7 +57,7 @@ func _physics_process(delta: float) -> void:
 			velocity_vector += Vector2.LEFT
 		if Input.is_action_pressed("ui_right") || Input.is_key_pressed(KEY_D):
 			velocity_vector += Vector2.RIGHT
-		translate(velocity_vector.normalized() * speed * delta)
+		translate(velocity_vector.normalized() * modified_speed * delta)
 	if !shooting:
 		if velocity_vector == Vector2.ZERO:
 			animation_handler.play("idle")
@@ -64,10 +76,15 @@ func _physics_process(delta: float) -> void:
 
 
 func get_hit(damage):
+	if dashing:
+		return
 	currentHP -= damage
-	update_hp_label()
 	if currentHP <= 0:
 		$HPLabel.text = "dead"
+		emit_signal("game_over")
+		alive = false
+	else:
+		update_hp_label()
 
 func update_hp_label():
 	$HPLabel.text = "%d/%d" % [currentHP, maxHP]
@@ -98,4 +115,14 @@ func dash(dash_damage, dash_power, dash_to):
 	dash_dir = dir
 	dashing = true
 	dash_start = global_position
-	#translate(dir * dash_power)
+
+func heal(strength):
+	currentHP += strength
+	if currentHP > maxHP:
+		currentHP = maxHP
+	update_hp_label()
+
+func speed_buff(strength, duration):
+	speed_buff_end_time = Time.get_ticks_msec() + duration
+	speed_buff_strength = strength
+	pass

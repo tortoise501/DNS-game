@@ -9,6 +9,7 @@ var movement_target_position: Vector2 = Vector2.ZERO
 @export var maxHP := 1000
 var currentHP = maxHP
 var active = true
+var frozen = false
 
 @onready var weapon = $Weapon
 
@@ -28,6 +29,7 @@ var last_attack_time = 0
 
 signal enemy_died
 @onready var ghost_pref = preload("res://prefabs/ghost/ghost.tscn")
+
 
 
 func _ready():
@@ -113,7 +115,7 @@ func get_hit(damage):
 		var ghost_inst:Node2D = ghost_pref.instantiate()
 		ghost_inst.global_position = global_position + Vector2.UP * 20
 		get_node("/root/Node2D").add_child(ghost_inst)
-		enemy_died.emit(enemy_tier)
+		enemy_died.emit(enemy_tier, global_position)
 	else:
 		animation_handler.play("get_hit")
 	update_hp_label()
@@ -127,6 +129,11 @@ func update_hp_label():
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-	if !active:
+	if !active && !frozen:
 		queue_free()
 	pass # Replace with function body.
+
+func freeze():
+	frozen = true
+	active = false
+	animation_handler.play("death")

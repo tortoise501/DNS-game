@@ -1,5 +1,9 @@
 extends Node2D
 
+var save_path := "user://score.score"
+
+var game_on = true
+
 @onready var player = $Player
 
 var score = 0
@@ -16,6 +20,16 @@ var score = 0
 	[80,20,0],
 	[50,35,15]
 ]
+
+
+@onready var buffs = [
+	preload("res://prefabs/buffs/heal_buff.tscn"),
+	preload("res://prefabs/buffs/coin_buff.tscn"),
+	preload("res://prefabs/buffs/speed_buff.tscn"),
+	preload("res://prefabs/buffs/bomb_buff.tscn"),
+]
+@onready var explosion_pref = preload("res://prefabs/buffs/explosion.tscn")
+@export var buff_spawn_chance_per_tier := 10
 
 #spawns / sec
 var start_spawn_rate = 0.2
@@ -53,6 +67,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if !game_on:
+		return
 	var time_between_enemy_queue = (1 / get_current_spawn_rate()) * 1000
 	if last_time_enemy_queue + time_between_enemy_queue < Time.get_ticks_msec():
 		enemies_queued += 1
@@ -81,10 +97,48 @@ func _on_child_entered_tree(node: Node) -> void:
 		enemy_count += 1
 		node.enemy_died.connect(_on_enemy_died)
 
-func _on_enemy_died(tier):
+func _on_enemy_died(tier, pos):
+	var chance = buff_spawn_chance_per_tier * tier
+	var dice = randi_range(0,100)
+	if dice < chance:
+		var i = randi_range(0,buffs.size() - 1)
+		var buff: Node2D = buffs[i].instantiate()
+		buff.global_position = pos
+		add_child(buff)
 	enemy_count -= 1
 	score += tier
 	update_score_label()
 
 func update_score_label():
 	$CanvasLayer/Control/ScoreLabel.text = String("score: %d" % score)
+
+
+func pick_up_coin(strength):
+	score += strength
+	update_score_label()
+
+func explode(strength,radius,pos):
+	var explosion_inst:Node2D = explosion_pref.instantiate()
+	explosion_inst.global_position = pos
+	explosion_inst.scale *= radius/2
+	explosion_inst.strength = strength
+	add_child(explosion_inst)
+
+
+func _on_player_game_over() -> void:
+	game_on = false
+	var children = get_children()
+	for child in children:
+		if child.has_method("freeze"):
+			child.freeze()
+	print("GAME OVER")
+	save_best_score()
+	pass # Replace with function body.
+
+func save_best_score():
+	var file = FileAccess.open(save_path, FileAccess.WRITE_READ)
+	var best_score = file.get_32()
+	print(best_score)
+	if best_score < score:
+		file.store_32(score)
+	file.close()

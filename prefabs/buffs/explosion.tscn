@@ -1,0 +1,59 @@
+[gd_scene load_steps=11 format=3 uid="uid://bp0ucce5twr8c"]
+
+[ext_resource type="Texture2D" uid="uid://dnbi4s182eldo" path="res://prefabs/effects/Explosions pack/explosion-1-g/Sprites/frame1.png" id="1_1gpvr"]
+[ext_resource type="Script" uid="uid://bfbyvndaok3g6" path="res://prefabs/buffs/explosion.gd" id="1_tvgl5"]
+[ext_resource type="Texture2D" uid="uid://blm8rdov50orm" path="res://prefabs/effects/Explosions pack/explosion-1-g/Sprites/frame2.png" id="2_tvgl5"]
+[ext_resource type="Texture2D" uid="uid://cjux8s47vihlt" path="res://prefabs/effects/Explosions pack/explosion-1-g/Sprites/frame3.png" id="3_h6f1w"]
+[ext_resource type="Texture2D" uid="uid://bxlvc7iaumh7m" path="res://prefabs/effects/Explosions pack/explosion-1-g/Sprites/frame4.png" id="4_vbyvw"]
+[ext_resource type="Texture2D" uid="uid://0m51vwor5g8p" path="res://prefabs/effects/Explosions pack/explosion-1-g/Sprites/frame5.png" id="5_ruchs"]
+[ext_resource type="Texture2D" uid="uid://cb08asig0p643" path="res://prefabs/effects/Explosions pack/explosion-1-g/Sprites/frame6.png" id="6_f8k0u"]
+[ext_resource type="Texture2D" uid="uid://bsmyvq7wqf73f" path="res://prefabs/effects/Explosions pack/explosion-1-g/Sprites/frame7.png" id="7_m4iak"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ye6y5"]
+radius = 1.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vt73p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_1gpvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_tvgl5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_h6f1w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vbyvw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ruchs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_f8k0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_m4iak")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 20.0
+}]
+
+[node name="Explosion" type="Area2D"]
+texture_filter = 1
+script = ExtResource("1_tvgl5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ye6y5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.06, 0.06)
+sprite_frames = SubResource("SpriteFrames_vt73p")
+animation = &"explode"
+frame = 6
+frame_progress = 1.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

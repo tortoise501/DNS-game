@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7gggu736a5d6"]
+
+[ext_resource type="Texture2D" uid="uid://dcnx0n2g4rhbe" path="res://prefabs/buffs/48 Free Magic Potions Pixel Art Icons/PNG/Transperent/Icon33.png" id="1_0hd6y"]
+[ext_resource type="Script" uid="uid://388hrwmd3geb" path="res://prefabs/buffs/buff.gd" id="1_rrcm1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rrcm1"]
+size = Vector2(20, 28)
+
+[node name="Buff" type="Area2D"]
+script = ExtResource("1_rrcm1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rrcm1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_0hd6y")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

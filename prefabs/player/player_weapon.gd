@@ -17,15 +17,17 @@ var arrow_rain_KD = 10000 #msec
 var last_time_arrow_rain_used = -100000
 var arrow_rain_damage = 50
 
-var dash_KD = 3000
+var dash_KD = 4000
 var last_time_dash_used = -3000
-var dash_power = 300
+var dash_power = 450
 var dash_damage = 200
 
 signal shot(int)
 
 
 func _process(_delta: float) -> void:
+	if !get_parent().alive:
+		return
 	queue_redraw()
 	
 	if Input.is_action_just_pressed("ability_1"):

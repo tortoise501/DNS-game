@@ -25,7 +25,5 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	print("fuck")
 	if body.is_in_group("Enemy"):
-		print("yey")
 		body.get_hit(dash_damage)

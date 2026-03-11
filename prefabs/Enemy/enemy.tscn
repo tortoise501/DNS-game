@@ -518,6 +518,7 @@ scale = Vector2(0.9999998, 0.9999998)
 shape = SubResource("RectangleShape2D_u6v4s")
 
 [node name="HPLabel" type="Label" parent="."]
+visible = false
 offset_left = -67.49999
 offset_top = -137.5
 offset_right = 72.49999

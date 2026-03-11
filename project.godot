@@ -24,7 +24,7 @@ project/assembly_name="DNSProject"
 Player=""
 PlayerBullet=""
 Enemy=""
-EnemyBullet=""
+Enemy_bullet=""
 
 [input]
 
