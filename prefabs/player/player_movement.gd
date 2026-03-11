@@ -17,10 +17,6 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	if get_global_mouse_position().x < global_position.x:
-		animation_handler.flip_h = true
-	else:
-		animation_handler.flip_h = false
 	
 	var velocity_vector = Vector2.ZERO
 	if Input.is_action_pressed("ui_up") || Input.is_key_pressed(KEY_W):
@@ -32,10 +28,20 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("ui_right") || Input.is_key_pressed(KEY_D):
 		velocity_vector += Vector2.RIGHT
 	translate(velocity_vector.normalized() * speed * delta)
-	if !shooting && velocity_vector == Vector2.ZERO:
-		animation_handler.play("idle")
-	elif !shooting:
-		animation_handler.play("run")
+	if !shooting:
+		if velocity_vector == Vector2.ZERO:
+			animation_handler.play("idle")
+		else:
+			animation_handler.play("run")
+		if velocity_vector.x > 0:
+			animation_handler.flip_h = false
+		elif velocity_vector.x < 0:
+			animation_handler.flip_h = true
+	else:
+		if get_global_mouse_position().x < global_position.x:
+			animation_handler.flip_h = true
+		else:
+			animation_handler.flip_h = false
 
 
 
