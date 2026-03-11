@@ -10,7 +10,12 @@ var movement_target_position: Vector2 = Vector2.ZERO
 var currentHP = maxHP
 var active = true
 
-@onready var attack_pref = preload("res://prefabs/enemy_attack/attack.tscn")
+@onready var weapon = $Weapon
+
+#@onready var attack_pref = preload("res://prefabs/enemy_attack/attack.tscn")
+const Attack_type = preload("res://prefabs/common/attack_type.gd").Attack_type
+
+@export var attack_type := Attack_type.MELEE
 @export var attack_distance := 75
 var attack_distance_max_diff = 20
 @export var attack_damage := 10
@@ -26,6 +31,8 @@ signal enemy_died
 
 
 func _ready():
+	weapon.attack_type = attack_type
+	
 	currentHP = maxHP
 	update_hp_label()
 	# These values need to be adjusted for the actor's speed
@@ -79,7 +86,7 @@ func _process(delta: float) -> void:
 	var player_pos = get_parent().player.global_position
 	if last_attack_time + attack_time < Time.get_ticks_msec() && (player_pos - global_position).length() < attack_distance:
 		last_attack_time = Time.get_ticks_msec()
-		attack(player_pos)
+		weapon.attack(player_pos)
 		animation_handler.play("shoot")
 	elif !animation_handler.is_playing() && active:
 		if velocity != Vector2.ZERO:
@@ -87,13 +94,13 @@ func _process(delta: float) -> void:
 		if velocity == Vector2.ZERO:
 			animation_handler.play("idle")
 		
-func attack(player_pos):
-	var attack_inst = attack_pref.instantiate()
-	attack_inst.damage = attack_damage
-	attack_inst.global_position = (global_position + player_pos)/2
-	attack_inst.look_at(player_pos)
-	get_node("/root/Node2D").add_child(attack_inst)
-	pass
+#func attack(player_pos):
+	#var attack_inst = attack_pref.instantiate()
+	#attack_inst.damage = attack_damage
+	#attack_inst.global_position = (global_position + player_pos)/2
+	#attack_inst.look_at(player_pos)
+	#get_node("/root/Node2D").add_child(attack_inst)
+	#pass
 
 
 func get_hit(damage):
