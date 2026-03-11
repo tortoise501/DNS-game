@@ -9,6 +9,14 @@ var currentHP = 1000
 @onready var animation_handler = $AnimatedSprite2D
 var shooting = false
 
+var dashing = false
+var dash_distance = 0
+var dash_dir = Vector2.ZERO
+var dash_start = Vector2.ZERO
+var dash_acc_error = 10
+var dash_speed = 5
+
+@onready var collision = $CollisionShape2D
 
 
 @onready var dash_anim_pref = preload("res://prefabs/dash/dash_anim.tscn")
@@ -22,15 +30,22 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	velocity_vector = Vector2.ZERO
-	if Input.is_action_pressed("ui_up") || Input.is_key_pressed(KEY_W):
-		velocity_vector += Vector2.UP
-	if Input.is_action_pressed("ui_down") || Input.is_key_pressed(KEY_S):
-		velocity_vector += Vector2.DOWN
-	if Input.is_action_pressed("ui_left") || Input.is_key_pressed(KEY_A):
-		velocity_vector += Vector2.LEFT
-	if Input.is_action_pressed("ui_right") || Input.is_key_pressed(KEY_D):
-		velocity_vector += Vector2.RIGHT
-	translate(velocity_vector.normalized() * speed * delta)
+	if dashing:
+		collision.set_deferred("disabled",true)
+		translate(dash_dir * dash_distance * delta * dash_speed)
+		if (global_position - (dash_start + dash_dir * dash_distance)).length() < dash_acc_error:
+			collision.set_deferred("disabled",false)
+			dashing = false
+	else:
+		if Input.is_action_pressed("ui_up") || Input.is_key_pressed(KEY_W):
+			velocity_vector += Vector2.UP
+		if Input.is_action_pressed("ui_down") || Input.is_key_pressed(KEY_S):
+			velocity_vector += Vector2.DOWN
+		if Input.is_action_pressed("ui_left") || Input.is_key_pressed(KEY_A):
+			velocity_vector += Vector2.LEFT
+		if Input.is_action_pressed("ui_right") || Input.is_key_pressed(KEY_D):
+			velocity_vector += Vector2.RIGHT
+		translate(velocity_vector.normalized() * speed * delta)
 	if !shooting:
 		if velocity_vector == Vector2.ZERO:
 			animation_handler.play("idle")
@@ -79,4 +94,8 @@ func dash(dash_damage, dash_power, dash_to):
 	dash_anim_inst.dash_size = dash_power
 	dash_anim_inst.dash_damage = dash_damage
 	get_node("/root/Node2D").add_child(dash_anim_inst)
-	translate(dir * dash_power)
+	dash_distance = dash_power
+	dash_dir = dir
+	dashing = true
+	dash_start = global_position
+	#translate(dir * dash_power)

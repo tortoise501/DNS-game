@@ -1,8 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://b75dqs4u14k0i"]
+[gd_scene load_steps=35 format=3 uid="uid://b75dqs4u14k0i"]
 
 [ext_resource type="PackedScene" uid="uid://8qhxwle63jvq" path="res://prefabs/Enemy/enemy.tscn" id="1_m1cso"]
 [ext_resource type="Texture2D" uid="uid://cqknnsykvt7ao" path="res://prefabs/Enemy/Monsters_Creatures_Fantasy/Mushroom/Death.png" id="2_634bp"]
 [ext_resource type="Texture2D" uid="uid://cv35rn03pilti" path="res://prefabs/Enemy/Monsters_Creatures_Fantasy/Mushroom/Idle.png" id="3_ci8pj"]
+[ext_resource type="Texture2D" uid="uid://cwmwje1c5w33l" path="res://prefabs/Enemy/Monsters_Creatures_Fantasy/Mushroom/Take Hit.png" id="3_mcw8m"]
 [ext_resource type="Texture2D" uid="uid://l8eerx0iv0ud" path="res://prefabs/Enemy/Monsters_Creatures_Fantasy/Mushroom/Run.png" id="4_mcw8m"]
 [ext_resource type="Texture2D" uid="uid://biyvkx37bjqva" path="res://prefabs/Enemy/Monsters_Creatures_Fantasy/Mushroom/Attack.png" id="5_xl3r6"]
 
@@ -20,6 +21,22 @@ region = Rect2(300, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ljrbp"]
 atlas = ExtResource("2_634bp")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xl3r6"]
+atlas = ExtResource("3_mcw8m")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_difxm"]
+atlas = ExtResource("3_mcw8m")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gv1sv"]
+atlas = ExtResource("3_mcw8m")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iabp5"]
+atlas = ExtResource("3_mcw8m")
 region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7btes"]
@@ -115,6 +132,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_xl3r6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_difxm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gv1sv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iabp5")
+}],
+"loop": false,
+"name": &"get_hit",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_7btes")
 }, {
 "duration": 1.0,
@@ -196,7 +230,7 @@ attack_time = 1000
 [node name="AnimatedSprite2D" parent="." index="1"]
 position = Vector2(0, -27.795)
 sprite_frames = SubResource("SpriteFrames_difxm")
-animation = &"run"
+frame = 3
 
 [node name="CollisionShape2D" parent="." index="2"]
 position = Vector2(1.2500063, 2.499999)

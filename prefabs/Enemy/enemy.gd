@@ -114,6 +114,8 @@ func get_hit(damage):
 		ghost_inst.global_position = global_position + Vector2.UP * 20
 		get_node("/root/Node2D").add_child(ghost_inst)
 		enemy_died.emit(enemy_tier)
+	else:
+		animation_handler.play("get_hit")
 	update_hp_label()
 
 
