@@ -25,9 +25,20 @@ grow_vertical = 2
 script = ExtResource("1_pfip4")
 
 [node name="BackgroundPlaceholder" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(575.125, 324.75)
 scale = Vector2(1.1833333, 0.9946153)
 texture = ExtResource("1_dixyu")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.003
+offset_right = 2.0
+offset_bottom = 0.05596924
+texture = ExtResource("1_dixyu")
+stretch_mode = 6
 
 [node name="play" type="Button" parent="."]
 texture_filter = 1

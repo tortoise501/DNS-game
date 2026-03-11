@@ -32,7 +32,7 @@ var score = 0
 @export var buff_spawn_chance_per_tier := 10
 
 #spawns / sec
-var start_spawn_rate = 0.5
+var start_spawn_rate = 1
 var max_spawn_rate = 5
 var time_to_max_spawnrate = 180 #sec
 

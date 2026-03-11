@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b61iiw5xt6857"]
+[gd_scene load_steps=5 format=3 uid="uid://b61iiw5xt6857"]
 
 [ext_resource type="Script" uid="uid://c4wvra6awsvw" path="res://scenes/ui/start_menu/setting.gd" id="1_iovme"]
 [ext_resource type="FontFile" uid="uid://d28jrqfgwg4uq" path="res://KiwiSoda.ttf" id="2_hfa0v"]
 [ext_resource type="Texture2D" uid="uid://b081ujtsw0fsq" path="res://assets/background.png" id="3_2cd73"]
+[ext_resource type="PackedScene" uid="uid://bc1djfytrxhql" path="res://sounds/sound_controller.tscn" id="4_g5e25"]
 
 [node name="setting" type="Control"]
 texture_filter = 1
@@ -14,7 +15,18 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_iovme")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.94400007
+anchor_bottom = 1.011
+offset_right = 63.511963
+offset_bottom = -0.12805176
+texture = ExtResource("3_2cd73")
+stretch_mode = 6
+
 [node name="Background" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(576.25, 324.25)
 scale = Vector2(1.0593376, 0.9885496)
 texture = ExtResource("3_2cd73")
@@ -66,11 +78,16 @@ step = 0.05
 value = 1.0
 
 [node name="music_m" type="CheckButton" parent="."]
-layout_mode = 0
-offset_left = 344.0
-offset_top = 256.0
-offset_right = 433.0
-offset_bottom = 287.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.29900002
+anchor_top = 0.395
+anchor_right = 0.37600002
+anchor_bottom = 0.44300002
+offset_left = -0.44802856
+offset_top = 0.039993286
+offset_right = -0.15200806
+offset_bottom = -0.06402588
 theme_override_fonts/font = ExtResource("2_hfa0v")
 theme_override_font_sizes/font_size = 22
 text = "Mute"
@@ -78,48 +95,65 @@ text = "Mute"
 [node name="Label2" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.29900002
-anchor_top = 0.48100004
-anchor_right = 0.326
-anchor_bottom = 0.517
-offset_left = -8.448029
-offset_top = 32.31198
-offset_right = -7.552002
-offset_bottom = 31.983978
+anchor_left = 0.29200003
+anchor_top = 0.531
+anchor_right = 0.323
+anchor_bottom = 0.56600004
+offset_left = -0.3840332
+offset_top = -0.088012695
+offset_right = -4.0960083
+offset_bottom = 0.23196411
 theme_override_fonts/font = ExtResource("2_hfa0v")
 theme_override_font_sizes/font_size = 22
 text = "SFX"
 
 [node name="sfx" type="HSlider" parent="."]
-layout_mode = 0
-offset_left = 384.0
-offset_top = 352.0
-offset_right = 672.0
-offset_bottom = 368.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.333
+anchor_top = 0.54300004
+anchor_right = 0.583
+anchor_bottom = 0.568
+offset_left = 0.3840027
+offset_top = 0.13598633
+offset_right = 0.38397217
+offset_bottom = -0.06402588
 min_value = 0.1
 max_value = 1.0
 step = 0.05
 value = 1.0
 
 [node name="sfx_m" type="CheckButton" parent="."]
-layout_mode = 0
-offset_left = 344.0
-offset_top = 384.0
-offset_right = 433.0
-offset_bottom = 415.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.29900002
+anchor_top = 0.59300005
+anchor_right = 0.37600002
+anchor_bottom = 0.64000005
+offset_left = -0.44802856
+offset_top = -0.2640381
+offset_right = -0.15200806
+offset_bottom = 0.27996826
 theme_override_fonts/font = ExtResource("2_hfa0v")
 theme_override_font_sizes/font_size = 22
 text = "Mute"
 
 [node name="fullscreen" type="CheckButton" parent="."]
-layout_mode = 0
-offset_left = 328.0
-offset_top = 456.0
-offset_right = 455.0
-offset_bottom = 487.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28500003
+anchor_top = 0.70400006
+anchor_right = 0.409
+anchor_bottom = 0.75200003
+offset_left = -0.32003784
+offset_top = -0.19204712
+offset_right = -16.168
+offset_bottom = -0.2960205
 theme_override_fonts/font = ExtResource("2_hfa0v")
 theme_override_font_sizes/font_size = 22
 text = "Fullscreen"
+
+[node name="Node" parent="." instance=ExtResource("4_g5e25")]
 
 [connection signal="pressed" from="back" to="." method="_on_button_pressed"]
 [connection signal="value_changed" from="music" to="." method="_on_music_value_changed"]

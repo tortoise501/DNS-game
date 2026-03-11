@@ -4,11 +4,11 @@
 [ext_resource type="Script" uid="uid://bf4ungj1swrb2" path="res://game_controller.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://b1j8qhq56u00j" path="res://scenes/ui/player_ui/game_over.tscn" id="2_7r4gi"]
 [ext_resource type="Texture2D" uid="uid://gjputo8nbleo" path="res://terrain/Texture/TX Tileset Stone Ground.png" id="2_k0juu"]
+[ext_resource type="FontFile" uid="uid://d28jrqfgwg4uq" path="res://KiwiSoda.ttf" id="2_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://ck2j0at6nwwml" path="res://prefabs/player/player.tscn" id="3_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bu60bsxaki8mw" path="res://prefabs/aim_point/aim_point.tscn" id="4_k0juu"]
 [ext_resource type="PackedScene" uid="uid://70l54w7mbusj" path="res://prefabs/enemy_spawner/enemy_spawner.tscn" id="6_qfnet"]
 [ext_resource type="PackedScene" uid="uid://bc1djfytrxhql" path="res://sounds/sound_controller.tscn" id="7_i7141"]
-[ext_resource type="PackedScene" uid="uid://b20clumhu1ybf" path="res://prefabs/Enemy/enemy_eye.tscn" id="10_e3hyu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4d63b"]
 texture = ExtResource("1_4wyf3")
@@ -500,6 +500,7 @@ layout_mode = 1
 anchors_preset = -1
 offset_right = 286.0
 offset_bottom = 99.843994
+theme_override_fonts/font = ExtResource("2_w7kh3")
 theme_override_font_sizes/font_size = 37
 text = "score label"
 horizontal_alignment = 1
@@ -546,18 +547,6 @@ z_index = -9
 position = Vector2(-632, -684.99994)
 
 [node name="Node" parent="." instance=ExtResource("7_i7141")]
-
-[node name="Enemy" parent="." instance=ExtResource("10_e3hyu")]
-position = Vector2(-88, -55)
-
-[node name="Enemy2" parent="." instance=ExtResource("10_e3hyu")]
-position = Vector2(128, -63)
-
-[node name="Enemy3" parent="." instance=ExtResource("10_e3hyu")]
-position = Vector2(-3, 104)
-
-[node name="Enemy4" parent="." instance=ExtResource("10_e3hyu")]
-position = Vector2(264, 24)
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="game_over" from="Player" to="." method="_on_player_game_over"]

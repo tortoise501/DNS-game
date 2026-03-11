@@ -56,7 +56,7 @@ func _on_sfx_m_toggled(toggled_on: bool) -> void:
 	save_settings()
   
 func _on_fullscreen_toggled(toggled_on: bool) -> void:
-	if toggled_on == true:
+	if toggled_on:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)

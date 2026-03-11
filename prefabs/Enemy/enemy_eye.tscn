@@ -246,7 +246,7 @@ enemy_tier = 3
 maxHP = 500
 attack_type = 1
 attack_distance = 300
-attack_damage = 20
+attack_damage = 70
 attack_time = 700
 
 [node name="AnimatedSprite2D" parent="." index="1"]

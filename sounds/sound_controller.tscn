@@ -8,6 +8,7 @@ script = ExtResource("1_teukl")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_teukl")
+volume_db = -11.428
 autoplay = true
 bus = &"Music"
 parameters/looping = true
