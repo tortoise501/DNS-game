@@ -8,7 +8,7 @@ var ability_used = 0
 @onready var aim_point = get_node("/root/Node2D/AimPoint")
 @onready var aim_point_sprite: Sprite2D = get_node("/root/Node2D/AimPoint/Sprite2D")
 
-var simple_shot_damage = 350
+var simple_shot_damage = 300
 
 var arrow_rain_count = 50
 var arrow_rain_radius = 100
@@ -19,7 +19,7 @@ var arrow_rain_damage = 50
 
 var dash_KD = 3000
 var last_time_dash_used = -3000
-var dash_power = 200
+var dash_power = 300
 var dash_damage = 200
 
 signal shot(int)

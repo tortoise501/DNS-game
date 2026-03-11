@@ -52,12 +52,18 @@ func _physics_process(delta):
 
 	velocity = current_agent_position.direction_to(next_path_position) * movement_speed
 	
+	if velocity.x >= 0:
+		animation_handler.flip_h = false
+	else:
+		animation_handler.flip_h = true
+		
 		
 	move_and_slide()
 	set_movement_target(get_parent().player.global_position)
 	
 func _process(delta: float) -> void:
-	
+	if !active:
+		return
 	var player_pos = get_parent().player.global_position
 	if last_attack_time + attack_time < Time.get_ticks_msec() && (player_pos - global_position).length() < attack_distance:
 		last_attack_time = Time.get_ticks_msec()
