@@ -8,6 +8,9 @@ var currentHP = 1000
 @onready var animation_handler = $AnimatedSprite2D
 var shooting = false
 
+var do_dash = false
+var dash_power = 400
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,7 +30,11 @@ func _physics_process(delta: float) -> void:
 		velocity_vector += Vector2.LEFT
 	if Input.is_action_pressed("ui_right") || Input.is_key_pressed(KEY_D):
 		velocity_vector += Vector2.RIGHT
-	translate(velocity_vector.normalized() * speed * delta)
+	if do_dash:
+		translate(velocity_vector.normalized() * dash_power)
+		do_dash = false
+	else:
+		translate(velocity_vector.normalized() * speed * delta)
 	if !shooting:
 		if velocity_vector == Vector2.ZERO:
 			animation_handler.play("idle")
@@ -68,3 +75,8 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	if shooting == true:
 		shooting = false
 	pass # Replace with function body.
+
+
+func dash():
+	do_dash = true
+	pass

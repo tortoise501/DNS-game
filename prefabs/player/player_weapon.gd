@@ -14,6 +14,9 @@ var arrow_rain_height = 200
 var arrow_rain_KD = 10000 #msec
 var last_time_arrow_rain_used = -100000
 
+var dash_KD = 3000
+var last_time_dash_used = -3000
+
 signal shot(int)
 
 
@@ -23,6 +26,10 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ability_1"):
 		change_ability(1)
 	
+	if Input.is_action_just_pressed("ability_2"):
+		change_ability(2)
+		shoot()
+	
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
 	
@@ -30,6 +37,11 @@ func _process(_delta: float) -> void:
 		$"../CanvasLayer/Control/AbilityKD1".text = "0"#first ability is ready
 	else:
 		$"../CanvasLayer/Control/AbilityKD1".text = String("%.1f s" % ((last_time_arrow_rain_used + arrow_rain_KD - Time.get_ticks_msec())/1000.0))
+		
+	if last_time_dash_used + dash_KD < Time.get_ticks_msec():
+		$"../CanvasLayer/Control/AbilityKD2".text = "0"#first ability is ready
+	else:
+		$"../CanvasLayer/Control/AbilityKD2".text = String("%.1f s" % ((last_time_dash_used + dash_KD - Time.get_ticks_msec())/1000.0))	
 			
 func shoot():
 	match ability_used:
@@ -37,6 +49,14 @@ func shoot():
 			use_ability0()
 		1:
 			use_ability1()
+		2:
+			use_ability2()
+			
+func use_ability2():
+	if last_time_dash_used + dash_KD < Time.get_ticks_msec():
+		last_time_dash_used = Time.get_ticks_msec()
+		get_parent().dash()
+	change_ability(0)
 				
 func use_ability1():
 	if last_time_arrow_rain_used + arrow_rain_KD < Time.get_ticks_msec():
