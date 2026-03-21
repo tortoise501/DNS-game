@@ -31,6 +31,7 @@ var score = 0
 @onready var explosion_pref = preload("res://prefabs/buffs/explosion.tscn")
 @export var buff_spawn_chance_per_tier := 10
 
+var time_started = 0
 #spawns / sec
 var start_spawn_rate = 1
 var max_spawn_rate = 5
@@ -40,7 +41,7 @@ var enemy_count = 0
 var max_enemy_count = 50
 
 func get_current_spawn_progress():
-	var time_passed = Time.get_ticks_msec() / 1000.0
+	var time_passed = (Time.get_ticks_msec()- time_started) / 1000.0 
 	return min(1.0, time_passed / float(time_to_max_spawnrate))
 
 func get_current_spawn_rate():
@@ -61,6 +62,7 @@ var last_time_enemy_queue = -100000
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	time_started = Time.get_ticks_msec()
 	update_score_label()
 	pass # Replace with function body.
 
